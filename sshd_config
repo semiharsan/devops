@@ -1,0 +1,131 @@
+#	$OpenBSD: sshd_config,v 1.103 2018/04/09 20:41:22 tj Exp $
+
+# This is the sshd server system-wide configuration file.  See
+# sshd_config(5) for more information.
+
+# This sshd was compiled with PATH=/usr/bin:/bin:/usr/sbin:/sbin
+
+# The strategy used for options in the default sshd_config shipped with
+# OpenSSH is to specify options with their default value where
+# possible, but leave them commented.  Uncommented options override the
+# default value.
+
+Include /etc/ssh/sshd_config.d/*.conf
+
+Protocol 2
+Port 52025
+
+# You can change to VERBOSE to get more detailed logs and information about system
+LogLevel INFO
+
+PermitRootLogin yes
+MaxAuthTries 5
+MaxSessions 3
+
+# Expect .ssh/authorized_keys2 to be disregarded by default in future.
+AuthorizedKeysFile	/root/.ssh/authorized_keys
+PubkeyAuthentication yes
+
+# Don't read the user's ~/.rhosts and ~/.shosts files
+IgnoreRhosts yes
+
+PermitEmptyPasswords no
+PasswordAuthentication no
+
+# Change to yes to enable challenge-response passwords (beware issues with some PAM modules and threads)
+ChallengeResponseAuthentication no
+
+# Set this to 'yes' to enable PAM authentication, account processing, and session processing
+UsePAM yes
+
+# If you don't need to connect to another ssh with a pubkey in your local client, you can disable this.
+AllowAgentForwarding no 
+
+# Disable if you don't use ssh to forward ports to another server behind this server
+AllowTcpForwarding no  
+
+# Disable it if you don't need graphical interface
+X11Forwarding no  
+
+PrintMotd no
+
+# Don't use this as yes. TcpKeep Alive Messages can be spoofed by hackers
+TCPKeepAlive no
+
+#You can change to no if your ssh sessions and transfers are slow.
+Compression delayed
+
+#If no alive messages arrives in 6 mins. ssh session will be terminated
+ClientAliveInterval 360
+ClientAliveCountMax 0
+
+# no default banner path
+Banner /etc/issue.net
+
+# Allow client to pass locale environment variables
+AcceptEnv LANG LC_*
+
+# override default of no subsystems
+Subsystem sftp	/usr/lib/openssh/sftp-server
+
+
+#AddressFamily any
+#ListenAddress 0.0.0.0
+#ListenAddress ::
+
+#HostKey /etc/ssh/ssh_host_rsa_key
+#HostKey /etc/ssh/ssh_host_ecdsa_key
+#HostKey /etc/ssh/ssh_host_ed25519_key
+
+# Ciphers and keying
+#RekeyLimit default none
+
+# Logging
+#SyslogFacility AUTH
+
+# Authentication:
+
+#LoginGraceTime 2m
+#StrictModes yes
+#AuthorizedPrincipalsFile none
+
+#AuthorizedKeysCommand none
+#AuthorizedKeysCommandUser nobody
+
+# For this to work you will also need host keys in /etc/ssh/ssh_known_hosts
+#HostbasedAuthentication no
+# Cyhange to yes if you don't trust ~/.ssh/known_hosts for
+# HostbasedAuthentication
+#IgnoreUserKnownHosts no
+
+# Kerberos options
+#KerberosAuthentication no
+#KerberosOrLocalPasswd yes
+#KerberosTicketCleanup yes
+#KerberosGetAFSToken no
+
+# GSSAPI options
+#GSSAPIAuthentication no
+#GSSAPICleanupCredentials yes
+#GSSAPIStrictAcceptorCheck yes
+#GSSAPIKeyExchange no
+
+#GatewayPorts no
+
+#X11DisplayOffset 10
+#X11UseLocalhost yes
+#PermitTTY yes
+#PrintLastLog yes
+#PermitUserEnvironment no
+#UseDNS no
+#PidFile /var/run/sshd.pid
+#MaxStartups 10:30:100
+#PermitTunnel no
+#ChrootDirectory none
+#VersionAddendum none
+# Example of overriding settings on a per-user basis
+#Match User anoncvs
+#	X11Forwarding no
+#	AllowTcpForwarding no
+#	PermitTTY no
+#	ForceCommand cvs server
