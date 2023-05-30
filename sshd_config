@@ -25,6 +25,7 @@ MaxSessions 3
 # Expect .ssh/authorized_keys2 to be disregarded by default in future.
 AuthorizedKeysFile	/root/.ssh/authorized_keys
 PubkeyAuthentication yes
+PubkeyAcceptedKeyTypes +ssh-rsa
 
 # Don't read the user's ~/.rhosts and ~/.shosts files
 IgnoreRhosts yes
